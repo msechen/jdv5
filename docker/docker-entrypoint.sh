@@ -125,8 +125,6 @@ echo -e "======================== 6. 启动控制面板 ========================
 if [[ $ENABLE_WEB_PANEL == true ]]; then
     cd ${JD_DIR}/panel
     pm2 start ecosystem.config.js
-    cd ${JD_DIR}/app
-    pm2 start index.js
     if [[ $? -eq 0 ]]; then
         echo -e "控制面板启动成功...\n"
         echo -e "如未修改用户名密码，则初始用户名为：admin，初始密码为：adminadmin\n"
