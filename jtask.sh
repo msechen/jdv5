@@ -229,7 +229,8 @@ run_normal () {
         count_user_sum
         export_all_env all
         [[ $# -eq 1 ]] && random_delay
- ##       [[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
+        [[ $user_sum -ge 60 ]] &>/dev/null
+  ##[[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
         log_time=$(date "+%Y-%m-%d-%H-%M-%S")
         log_path="$dir_log/$file_name/$log_time.log"
         make_dir "$dir_log/$file_name"
