@@ -122,7 +122,7 @@ gen_own_dir_and_path () {
             fi
         done
     fi
-    count_user_sum && [[ $user_sum -ge 50 ]] && rm -rf $dir_config/* &>/dev/null
+##    count_user_sum && [[ $user_sum -ge 50 ]] && rm -rf $dir_config/* &>/dev/null
     if [[ ${#OwnRawFile[*]} -ge 1 ]]; then
         let scripts_path_num++
         array_own_scripts_path[$scripts_path_num]=$dir_raw  # 只有own脚本所在绝对路径附加了raw文件夹，其他数组均不附加
