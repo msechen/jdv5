@@ -62,6 +62,7 @@
         && rm -rf /root/.cache \
 	&&  npm i -g ttyd \
 	&& npm i -S png-js \
+	&& npm i -S jsdom \
         && npm i -g cnpm \
         && cnpm i \
         && cnpm i -g typescript  \
