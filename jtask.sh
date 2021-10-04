@@ -250,7 +250,7 @@ run_concurrent () {
         import_config_and_check "$file_name"
         update_crontab
         count_user_sum
-        [[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
+##        [[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
         echo -e "\n各账号间已经在后台开始并发执行，前台不输入日志，日志直接写入文件中。\n"
