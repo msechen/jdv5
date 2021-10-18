@@ -5,7 +5,7 @@
 57 13 * * * CMD_RMLOG
 
 # 导出所有互助码清单，日志在log/jcode下
-48 5 * * * CMD_CODE
+#48 5 * * * CMD_CODE
 
 # 重启挂机程序
 # 33 13 * * * CMD_JTASK hangup
