@@ -63,6 +63,14 @@
 	&&  npm i -g ttyd \
 	&& npm i -S png-js \
 	&& npm i -S jsdom \
+	&& npm i -S date-fns \
+	&& npm i -S axios \
+	&& npm i -S crypto-js \	
+	&& npm i -S ts-md5 \
+	&& npm i -S tslib \
+	&& npm i -S @types/node \
+	&& npm i -S requests \
+	&& npm i -S moment \
         && npm i -g cnpm \
         && cnpm i \
         && cnpm i -g typescript  \
