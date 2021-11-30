@@ -22,7 +22,7 @@
 安装方式一 \
 1、wget https://raw.githubusercontent.com/msechen/jdv5/main/docker-compose.yml \
 2、修改docker-compose.yml映射目录的绝对路径及相关参数 \
-3、docker-compose up -d \
+3、docker-compose up -d 
 
 安装方式二 \
  docker run -dit \
@@ -39,7 +39,7 @@
 	--name jdtrainv4bot \
 	--hostname jdtrainv4bot \
 	--restart always \
-	abcdjd/jdtrain:v4-bot \
+	abcdjd/jdtrain:v4-bot 
   
   面板:http://ip:5678 \
   账号密码:admin/adminadmin  
