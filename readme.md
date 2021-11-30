@@ -19,12 +19,12 @@
 - 任何以任何方式查看此项目的人或直接或间接使用本项目的任何脚本的使用者都应仔细阅读此声明。`evine`保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或本项目的规则，则视为您已接受此免责声明。
 
 
-安装方式一
-1、wget https://raw.githubusercontent.com/msechen/jdv5/main/docker-compose.yml
-2、修改docker-compose.yml映射目录的绝对路径及相关参数
-3、docker-compose up -d
+安装方式一 \
+1、wget https://raw.githubusercontent.com/msechen/jdv5/main/docker-compose.yml \
+2、修改docker-compose.yml映射目录的绝对路径及相关参数 \
+3、docker-compose up -d \
 
-安装方式二
+安装方式二 \
  docker run -dit \
   -v /jdtrainv4bot/config:/jd/config \
   -v /jdtrainv4bot/log:/jd/log \
