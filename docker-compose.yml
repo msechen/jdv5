@@ -1,0 +1,20 @@
+version: '2.0'
+services:
+  jdtrainv4bot:
+    image: abcdjd/jdtrain:v4-bot
+    container_name: jdtrainv4bot
+    restart: always
+    tty: true
+    volumes:
+      - /jdtrainv4bot/config:/jd/config
+      - /jdtrainv4bot/log:/jd/log
+      - /jdtrainv4bot/own:/jd/own
+      - /jdtrainv4bot/diy:/jd/jbot/diy
+      - /jdtrainv4bot/scripts:/jd/scripts
+    ports:
+      - 5678:5678
+    environment:
+      - ENABLE_HANGUP=false
+      - ENABLE_WEB_PANEL=true
+      - ENABLE_WEB_TTYD=false
+      - ENABLE_TG_BOT=true
