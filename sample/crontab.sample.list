@@ -1,5 +1,5 @@
 # 更新所有脚本（包括自用own脚本）
-42 * * * * CMD_UPDATE >> ROOT_DIR/log/CMD_UPDATE.log 2>&1
+#42 * * * * CMD_UPDATE >> ROOT_DIR/log/CMD_UPDATE.log 2>&1
 
 # 删除旧日志
 57 13 * * * CMD_RMLOG
