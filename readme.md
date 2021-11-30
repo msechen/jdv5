@@ -39,7 +39,7 @@
 	--name jdtrainv4bot \
 	--hostname jdtrainv4bot \
 	--restart always \
-	abcdjd/jdtrain:v4-bot
+	abcdjd/jdtrain:v4-bot \
   
-  面板:http://ip:5678
+  面板:http://ip:5678 \
   账号密码:admin/adminadmin  
