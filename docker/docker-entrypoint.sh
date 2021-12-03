@@ -149,16 +149,7 @@ if type python3 &>/dev/null; then
           echo -e "已设置为不自动启动Telegram Bot，跳过...\n"
      fi
  fi
- 
- echo -e "======================== 8. 启动diy Bot ========================\n"
-MY_BOT=$(ps -ef | grep "m_bot" | grep -v grep)
-    if [ "$MY_BOT" = "" ]; then
-        pm2 start /jd/scripts/m_bot.py -x --interpreter python3
-        echo -e "m_bot启动成功...\n"
-    else
-        pm2 restart m_bot
-        echo -e "m_bot重启成功...\n"
-    fi
+
 #        cp -f $file_bot_sample $file_bot_user
 #        if [[ -z $(grep -E "你的USERID" $file_bot_setting_user) ]]; then
 #            cd $dir_config
