@@ -65,6 +65,7 @@
 	&& npm i -S jsdom \
 	&& npm i -S date-fns \
 	&& npm i -S axios \
+	&& npm i -S got \
 	&& npm i -S crypto-js \	
 	&& npm i -S ts-md5 \
 	&& npm i -S tslib \
@@ -75,6 +76,7 @@
         && cnpm i \
         && cnpm i -g typescript  \
         && cnpm i -g ts-node \   
-        && pip3 install requests
+        && pip3 install requests \
+        && pip3 install telethon --upgrade
     WORKDIR ${JD_DIR}
     ENTRYPOINT ["docker-entrypoint.sh"]
