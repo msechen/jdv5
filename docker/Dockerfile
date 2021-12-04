@@ -71,6 +71,7 @@
 	&& npm i -S tslib \
 	&& npm i -S @types/node \
 	&& npm i -S requests \
+	&& npm i -S request \	
 	&& npm i -S moment \
         && npm i -g cnpm \
         && cnpm i \
