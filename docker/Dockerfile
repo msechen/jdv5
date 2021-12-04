@@ -73,6 +73,7 @@
 	&& npm i -S requests \
 	&& npm i -S request \	
 	&& npm i -S moment \
+	&& npm i -S tunnel \
         && npm i -g cnpm \
         && cnpm i \
         && cnpm i -g typescript  \
