@@ -53,8 +53,7 @@ env_name=(
     JDGLOBAL_SHARECODES
     JD818_SHARECODES
     JDHEALTH_SHARECODES
-    CITY_SHARECODES
-    
+    CITY_SHARECODES  
 )
 var_name=(
     Cookie
