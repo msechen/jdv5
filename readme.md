@@ -117,7 +117,7 @@ if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/diybot.sh ]; th
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/user.sh; bash user.sh
 ```
-重要提醒：user.py监控机器人登录比较困难，如果一次不能登录，请使用命令sh user.sh选择2卸载后再重新安装，登录时候提供008613XXXXXXX的手机号码格式。
+重要提醒：user.py监控机器人登录比较困难，如果一次不能登录，请使用命令sh user.sh选择2卸载后再重新安装，登录手机号码格式008613XXXXXXX。
 
 # 前瞻计划
 测试版机器人的部署方法，功能不稳定，不建议尝试。
