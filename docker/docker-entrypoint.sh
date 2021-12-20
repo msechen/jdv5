@@ -6,6 +6,8 @@ dir_sample="$JD_DIR/sample"
 dir_own="$JD_DIR/own"
 dir_log="$JD_DIR/log"
 dir_panel="$JD_DIR/panel"
+dir_scripts="$JD_DIR/scripts"
+dir_diy="$JD_DIR/diy"
 
 file_crontab_sample="$dir_sample/crontab.sample.list"
 file_crontab_user="$dir_config/crontab.list"
@@ -151,7 +153,7 @@ if type python3 &>/dev/null; then
     echo -e "======================== 8. 启动diy Bot ========================\n"
     MY_BOT=$(ps -ef | grep "m_bot" | grep -v grep)
     if [ "$MY_BOT" = "" ]; then
-        pm2 start /jd/scripts/m_bot.py -x --interpreter python3
+        pm2 start $dir_scripts/m_bot.py -x --interpreter python3
         echo -e "m_bot启动成功...\n"
        else
         pm2 restart m_bot
