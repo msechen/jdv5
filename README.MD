@@ -48,7 +48,7 @@
   账号密码:admin/adminadmin  
   
 <h1 align="center">
-  🐏
+  🐏 jbot三方监控bot安装
   <br>
   Author: chiupam
 </h1>
