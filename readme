@@ -110,25 +110,16 @@ JD_Diy/                     # JD_Diy 仓库
 ## 部署自定义机器人
 进入容器中执行以下命令即可，此命令也可以在机器人中使用（即使用 /cmd 指令）
 ```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/diybot.sh ]; then rm -f $root/diybot.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/diybot.sh; bash diybot.sh
+if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/diybot.sh ]; then rm -f $root/diybot.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/JD_Diy/main/shell/diybot.sh; bash diybot.sh
 ```
-## 部署[user.py](https://github.com/chiupam/JD_Diy/blob/main/jbot/user.py)监控机器人
+## 部署[user.py]监控机器人
 首先进入容器中执行以下命令，然后按提示操作即可（此命令禁止在机器人中使用）
 ```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/user.sh; bash user.sh
+if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/JD_Diy/main/shell/user.sh; bash user.sh
 ```
 重要提醒：user.py监控机器人登录比较困难，如果一次不能登录，请使用命令sh user.sh选择2卸载后再重新安装，登录手机号码格式008613XXXXXXX。
 
-# 前瞻计划
-测试版机器人的部署方法，功能不稳定，不建议尝试。
-## 用户要求
-- 比较热爱折腾
-- 一定的操作基础
-- 甚至可以 Pr 部分功能
-## 部署方法
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/diybot_beta.sh ]; then rm -f $root/diybot_beta.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/diybot_beta.sh; bash diybot_beta.sh
-```
+
 # 常用命令
 1. 升级原机器人程序
 ```shell
@@ -160,6 +151,6 @@ if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; cd $root; bash user.sh
 ```
 8. 一键
 ```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/bot.sh ]; then rm -f $root/bot.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/SuMaiKaDe/bot@main//config/bot.sh; bash bot.sh; if [ -f $root/diybot.sh ]; then rm -f $root/diybot.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/diybot.sh; bash diybot.sh; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/user.sh; bash user.sh
+if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/bot.sh ]; then rm -f $root/bot.sh; fi; cd $root; wget https://cdn.jsdelivr.net/gh/SuMaiKaDe/bot@main//config/bot.sh; bash bot.sh; if [ -f $root/diybot.sh ]; then rm -f $root/diybot.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/JD_Diy/main/shell/diybot.sh; bash diybot.sh; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/JD_Diy/main/shell/user.sh; bash user.sh
 ```
   
