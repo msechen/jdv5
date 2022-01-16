@@ -28,7 +28,9 @@
 3、docker-compose up -d 
 
 安装方式二 \
- docker run -dit \
+1、新建映射用到的目录，下面/jdtrainv4bot/config、/jdtrainv4bot/log、/jdtrainv4bot/own、/jdtrainv4bot/diy、/jdtrainv4bot/scripts替换你新建的目录 \
+2、执行以下命令 \
+docker run -dit \
   -v /jdtrainv4bot/config:/jd/config \
   -v /jdtrainv4bot/log:/jd/log \
   -v /jdtrainv4bot/own:/jd/own \
