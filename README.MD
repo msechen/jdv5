@@ -50,7 +50,7 @@ docker run -dit \
   账号密码:admin/adminadmin  
   
  <h1 align="center">
-  diy机器人
+  diy机器人安装使用
   <br>
   Author: chiupam
 </h1>
