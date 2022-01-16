@@ -10,6 +10,7 @@ services:
       - /jdtrainv4bot/log:/jd/log
       - /jdtrainv4bot/own:/jd/own
       - /jdtrainv4bot/diy:/jd/jbot/diy
+      - /jdtrainv4bot/user:/jd/jbot/user
       - /jdtrainv4bot/scripts:/jd/scripts
     ports:
       - 5678:5678
