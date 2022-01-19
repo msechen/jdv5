@@ -504,7 +504,7 @@ update_scripts () {
  #        rm -rf $dir_scripts
  #   fi
 
-    url_scripts=${JD_SCRIPTS_URL:-https://ghproxy.com/https://github.com/msechen/script.git}
+    url_scripts=${JD_SCRIPTS_URL:-https://github.com/msechen/script.git}
     branch_scripts=${JD_SCRIPTS_BRANCH:-main}
 
     ## 更新或克隆scripts
