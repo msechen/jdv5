@@ -99,8 +99,7 @@ if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/diybot.sh ]; th
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/JD_Diy/main/shell/user.sh; bash user.sh
 ```
-重要提醒：user.py监控机器人登录比较困难，如果一次不能登录，请使用命令sh user.sh选择2卸载后再重新安装，登录手机号码格式008613XXXXXXX。
-
+重要提醒：user.py监控机器人登录比较困难，如果一次不能登录，请使用命令pip3 install telethon --upgrade先升级最新客户端，然后命令sh user.sh选择2卸载后再重新安装，登录手机号码格式008613XXXXXXX。
 
 # 常用命令
 1. 升级原机器人程序
