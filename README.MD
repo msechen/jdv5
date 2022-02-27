@@ -31,7 +31,7 @@ docker run -dit \
   
   一键安装diy机器人
 ```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/user.sh ]; then rm -f $root/user.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/jdv5/main/userbot.sh; bash userbot.sh
+if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/userbot.sh ]; then rm -f $root/userbot.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/jdv5/main/userbot.sh; bash userbot.sh
 ```
 
  <h1 align="center">
