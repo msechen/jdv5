@@ -116,9 +116,10 @@ usage () {
     echo -e "1.$cmd_jtask <js_name>        # 依次执行，如果设置了随机延迟并且当时时间不在0-2、30-31、59分内，将随机延迟一定秒数"
     echo -e "2.$cmd_jtask <js_name> now    # 依次执行，无论是否设置了随机延迟，均立即运行，前台会输出日志，同时记录在日志文件中"
     echo -e "3.$cmd_jtask <js_name> conc   # 并发执行，无论是否设置了随机延迟，均立即运行，前台不产生日志，直接记录在日志文件中"
-    echo -e "4.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
-    echo -e "5.$cmd_jtask hangup           # 重启挂机程序"
-    echo -e "6.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
+    echo -e "4.$cmd_jtask <js_name> <num>  # num为某Cookie的编号，指定只以该Cookie运行脚本"
+    echo -e "5.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
+    echo -e "6.$cmd_jtask hangup           # 重启挂机程序"
+    echo -e "7.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
     echo -e "\notask命令运行 own 脚本，需要输入脚本的绝对路径或相对路径（定时任务中必须是绝对路径），otask会将该脚本复制到 scripts 目录下再运行，用法为："
     echo -e "1.$cmd_otask <js_path>        # 依次执行，如果设置了随机延迟并且当时时间不在0-2、30-31、59分内，将随机延迟一定秒数"
     echo -e "2.$cmd_otask <js_path> now    # 依次执行，无论是否设置了随机延迟，均立即运行，前台会输出日志，同时记录在日志文件中"
@@ -229,7 +230,6 @@ run_normal () {
         count_user_sum
         export_all_env all
         [[ $# -eq 1 ]] && random_delay
-  ##[[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
         log_time=$(date "+%Y-%m-%d-%H-%M-%S")
         log_path="$dir_log/$file_name/$log_time.log"
         make_dir "$dir_log/$file_name"
@@ -250,7 +250,6 @@ run_concurrent () {
         import_config_and_check "$file_name"
         update_crontab
         count_user_sum
-##        [[ $user_sum -ge 60 ]] && rm -rf $dir_config/* &>/dev/null
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
         echo -e "\n各账号间已经在后台开始并发执行，前台不输入日志，日志直接写入文件中。\n"
@@ -268,6 +267,28 @@ run_concurrent () {
         usage
     fi
 }
+
+## 指定只运行某一个Cookie
+run_specify () {
+    local p=$1
+    local ck_num=$2
+    find_file_and_path $p
+    if [[ $file_name ]] && [[ $which_path ]]; then
+        import_config_and_check "$file_name"
+        update_crontab
+        count_user_sum
+        export_all_env $ck_num
+        make_dir $dir_log/$file_name
+        log_time=$(date "+%Y-%m-%d-%H-%M-%S")
+        log_path="$dir_log/$file_name/${log_time}_${ck_num}.log"
+        cd $which_path
+        node $file_name.js 2>&1 | tee $log_path
+    else
+        echo -e "\n $p 脚本不存在，请确认...\n"
+        usage
+    fi
+}
+
 
 ## 命令检测
 case $# in
@@ -299,6 +320,9 @@ case $# in
             conc)
                 run_concurrent $1 $2
                 ;;
+            [1-9] | [1-9][0-9])
+                run_specify $1 $2
+                ;;            
             *)
                 echo -e "\n命令输入错误...\n"
                 usage
