@@ -1,6 +1,15 @@
 ## Version: v5.0.0
-## Date: 2021-7-20
+## Date: 2022-3-22
 ## Update Content: 1.新增主库设定功能；2.将config.sample.sh中AutoHelpOther预设为true；3.今后不再维护config.sample.sh中的互助码区域，如需要知道如何填写，直接运行jcode脚本后，全部复制过来粘贴在config.sh中第三区域或粘贴在config目录下sharecode.sh中即可，并按需修改，运行jtask命令时，sharecode.sh会覆盖jcode日志同名变量，不同名的不覆盖。
+
+####################################可达鸭库变量###########################################
+export QITOQITO="IdmM4TZTZGADM0I:a9080b4469208c022bbf584b4ff2a5a40f59dd4ee49645bff009b5b428332a24:QITOQITO"
+export QITOQITO_PLATFORM="jtask"
+#export QITOQITO_SYNC=1
+#export QITOQITO_COVER=1
+export JD_COOKIE_MAIN=10
+
+####################################可达鸭###########################################
 
 ## ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 第一区域：jd_scripts特有变量填写区域（需要shell转换的） ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
