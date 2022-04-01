@@ -29,6 +29,15 @@ docker run -dit \
   面板:http://ip:5678 \
   账号密码:admin/adminadmin  
   
+  安装docker后，请到/jd/config/bot.json机器人参数再重启jbot  :  pm2 restart jbot
+  
+  <h1 align="center">
+  请知晓：如果你选择以下一键安装diybot，默认你同意以下两个条件
+</h1>
+
+  1、自动拉取监控脚本库脚本 https://github.com/msechen/jdrain \
+  2、自动监控甘露殿频道 https://t.me/jdredrain
+  
   一键安装diy机器人
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi; if [ -f $root/userbot.sh ]; then rm -f $root/userbot.sh; fi; cd $root; wget https://raw.githubusercontent.com/msechen/jdv5/main/userbot.sh; bash userbot.sh
