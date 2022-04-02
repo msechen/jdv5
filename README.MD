@@ -36,7 +36,7 @@ docker run -dit \
 </h1>
 
   1、自动拉取监控脚本库脚本 https://github.com/msechen/jdrain \
-  2、自动监控甘露殿频道 https://t.me/jdredrain
+  2、自动监控甘露殿群组，入口 https://t.me/jdredrain
   
   一键安装diy机器人
 ```shell
