@@ -80,6 +80,7 @@
         && cnpm i -g ts-node \   
         && pip3 install requests \
 	&& pip3 install telethon \
+	&& pip3 install PyExecJS \
         && pip3 install telethon --upgrade
     WORKDIR ${JD_DIR}
     ENTRYPOINT ["docker-entrypoint.sh"]
