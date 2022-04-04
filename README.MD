@@ -10,20 +10,20 @@ docker-compose（适合支持docker-compose的环境）安装方式一 \
 docker（通用）安装方式二 \
 1、新建映射用到的目录，下面/jdtrainv4bot/config、/jdtrainv4bot/log、/jdtrainv4bot/own、/jdtrainv4bot/diy、/jdtrainv4bot/scripts替换你新建的目录 \
 2、执行以下命令 \
-docker run -dit \
-  -v /jdtrainv4bot/config:/jd/config \
-  -v /jdtrainv4bot/log:/jd/log \
-  -v /jdtrainv4bot/own:/jd/own \
-  -v /jdtrainv4bot/diy:/jd/jbot/diy \
-  -v /jdtrainv4bot/scripts:/jd/scripts \
-	-p 5678:5678 \
-  -e ENABLE_HANGUP=false \
-  -e ENABLE_WEB_PANEL=true \
-  -e ENABLE_WEB_TTYD=false \
-  -e ENABLE_TG_BOT=true \
-	--name jdtrainv4bot \
-	--hostname jdtrainv4bot \
-	--restart always \
+docker run -dit \ \
+  -v /jdtrainv4bot/config:/jd/config \ \
+  -v /jdtrainv4bot/log:/jd/log \ \
+  -v /jdtrainv4bot/own:/jd/own \ \
+  -v /jdtrainv4bot/diy:/jd/jbot/diy \ \
+  -v /jdtrainv4bot/scripts:/jd/scripts \ \
+	-p 5678:5678 \ \
+  -e ENABLE_HANGUP=false \ \
+  -e ENABLE_WEB_PANEL=true \ \
+  -e ENABLE_WEB_TTYD=false \ \
+  -e ENABLE_TG_BOT=true  \ \
+	--name jdtrainv4bot \ \
+	--hostname jdtrainv4bot \ \
+	--restart always \ \
 	abcdjd/jdtrain:v4-bot 
   
   面板:http://ip:5678 \
