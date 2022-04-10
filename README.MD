@@ -31,6 +31,8 @@ docker run -dit \ \
   
   安装docker后，请到/jd/config/bot.json机器人参数再重启jbot  :  pm2 restart jbot
   
+  
+  =======================以下停止开放======================
   <h1>
   请知晓：如果你选择以下一键安装diybot，默认你同意以下两个条件
 </h1>
