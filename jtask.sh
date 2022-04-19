@@ -401,7 +401,7 @@ main () {
                 conc)
                     run_concurrent $1 $2
                     ;;
-                [1-9] | [1-2][0-9])
+                [1-9] | [1-9][0-9])
                     run_specify $1 $2
                     ;;
                 *)
@@ -410,10 +410,10 @@ main () {
                     ;;
             esac
             ;;
-        3)
+        4)
             run_segment $1 $3 $4
             ;;
-        4)
+        5)
             run_segment_leader $1 $3 $4 $5
             ;;
         *)
