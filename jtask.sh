@@ -7,6 +7,13 @@ dir_root=$dir_shell
 ## 导入通用变量与函数
 . $dir_shell/jshare.sh
 
+## 更新crontab
+update_crontab () {
+    if [[ $(cat $list_crontab_user) != $(crontab -l) ]]; then
+        crontab $list_crontab_user
+    fi
+}
+
 ## 组合Cookie和互助码子程序，$1：要组合的内容
 combine_sub () {
     local what_combine=$1
@@ -54,6 +61,11 @@ trans_JD_BEAN_SIGN_NOTIFY () {
     esac
 }
 
+## 转换UN_SUBSCRIBES
+trans_UN_SUBSCRIBES () {
+    export UN_SUBSCRIBES="${goodPageSize}\n${shopPageSize}\n${jdUnsubscribeStopGoods}\n${jdUnsubscribeStopShop}"
+}
+
 ## 申明全部变量，$1：all/Cookie编号
 export_all_env () {
     local type=$1
@@ -65,6 +77,7 @@ export_all_env () {
     [ -f $file_sharecode ] && . $file_sharecode
     [[ $type == all ]] && combine_all || combine_one $type
     trans_JD_BEAN_SIGN_NOTIFY
+    trans_UN_SUBSCRIBES
 }
 
 random_delay () {
@@ -147,32 +160,22 @@ find_file_and_path () {
         fi
     done
 
-    if [[ -z $file_name ]] && [ -f $para ]; then
+    if [ -f $para ]; then
         local file_name_tmp3=$(echo $para | awk -F "/" '{print $NF}' | perl -pe "s|\.js||")
-#        echo -e "\n复制 $para 到 $dir_scripts 下，并执行...\n"
-        cp -f $para $dir_scripts
+        if [[ $(grep -E "^$file_name_tmp3$" $list_task_jd_scripts) ]]; then
+            echo -e "\njd_scripts项目存在同名文件$file_name_tmp3.js，不复制$para，直接执行$dir_scripts/$file_name_tmp3.js ...\n"
+        else
+            echo -e "\n复制 $para 到 $dir_scripts 下，并执行...\n"
+            cp -f $para $dir_scripts
+        fi
         file_name=$file_name_tmp3
         which_path=$dir_scripts
     fi
 }
 
-## 运行自定义脚本
-run_task_finish () {
-    if [[ $EnableTaskFinishShell == true ]]; then
-        echo -e "\n--------------------------------------------------------------\n"
-        if [ -f $file_task_finish_shell ]; then
-            echo -e "开始执行$file_task_finish_shell...\n"
-            . $file_task_finish_shell
-            echo -e "$file_task_finish_shell执行完毕...\n"
-        else
-           echo -e "$file_task_finish_shell文件不存在，跳过执行...\n"
-        fi
-    fi
-}
-
 ## 运行挂机脚本
 run_hungup () {
-    local hangup_file="jd_cfd_loop"
+    local hangup_file="jd_crazy_joy_coin"
     cd $dir_scripts
     for file in $hangup_file; do
         import_config_and_check $file
@@ -181,7 +184,7 @@ run_hungup () {
         if type pm2 >/dev/null 2>&1; then
             pm2 stop $file.js 2>/dev/null
             pm2 flush
-            pm2 start -a $file.js --watch "$file.js" --name=$file
+            pm2 start -a $file.js --watch "$dir_scripts/$file.js" --name=$file
         else
             if [[ $(ps -ef | grep "$file" | grep -v "grep") != "" ]]; then
                 ps -ef | grep "$file" | grep -v "grep" | awk '{print $2}' | xargs kill -9
@@ -192,6 +195,12 @@ run_hungup () {
             run_nohup $file.js >/dev/null 2>&1
         fi
     done
+}
+
+## 重置密码
+reset_user_password () {
+    cp -f $file_auth_sample $file_auth_user
+    echo -e "控制面板重置成功，用户名：admin，密码：adminadmin\n"
 }
 
 ## 一次性运行所有jd_scripts脚本
@@ -223,13 +232,11 @@ run_normal () {
         count_user_sum
         export_all_env all
         [[ $# -eq 1 ]] && random_delay
-        #[[ $user_sum -ge 50 ]] && rm -rf $dir_config/* &>/dev/null
         log_time=$(date "+%Y-%m-%d-%H-%M-%S")
         log_path="$dir_log/$file_name/$log_time.log"
         make_dir "$dir_log/$file_name"
         cd $which_path
         node $file_name.js 2>&1 | tee $log_path
-        run_task_finish "$file_name" 2>&1 | tee -a $log_path
     else
         echo -e "\n $p 脚本不存在，请确认...\n"
         usage
@@ -245,7 +252,6 @@ run_concurrent () {
         import_config_and_check "$file_name"
         update_crontab
         count_user_sum
-        #[[ $user_sum -ge 50 ]] && rm -rf $dir_config/* &>/dev/null
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
         echo -e "\n各账号间已经在后台开始并发执行，前台不输入日志，日志直接写入文件中。\n"
@@ -258,9 +264,6 @@ run_concurrent () {
             cd $which_path
             node $file_name.js &>$log_path &
         done
-        echo -e "账号并发任务正在执行中，等待ing...\n"
-        wait
-        echo -e "所有并发任务已全部完成，如需查看执行结果，请直接查看相关日志...\n"
     else
         echo -e "\n $p 脚本不存在，请确认...\n"
         usage
@@ -277,20 +280,18 @@ run_specify () {
         update_crontab
         count_user_sum
         export_all_env $ck_num
-        #[[ $user_sum -ge 50 ]] && rm -rf $dir_config/* &>/dev/null
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S")
         log_path="$dir_log/$file_name/${log_time}_${ck_num}.log"
         cd $which_path
         node $file_name.js 2>&1 | tee $log_path
-        run_task_finish "$file_name" 2>&1 | tee -a $log_path
     else
         echo -e "\n $p 脚本不存在，请确认...\n"
         usage
     fi
 }
 
-
+#分段ck执行
 run_segment() {
     local p=$1
     local start=$2
@@ -329,7 +330,7 @@ run_segment() {
     fi
 }
 
-## 并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
+## 带车头分段执行，并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
 run_segment_leader() {
     local p=$1
     local master=$2
@@ -373,54 +374,54 @@ run_segment_leader() {
     fi
 }
 
-## 命令检测
-main () {
-    case $# in
-        0)
-            echo
-            usage
-            ;;
-        1)
-            case $1 in
-                hangup)
-                    run_hungup
-                    ;;
-                runall)
-                    run_all_jd_scripts
-                    ;;
-                *)
-                    run_normal $1
-                    ;;
-            esac
-            ;;
-        2)
-            case $2 in
-                now)
-                    run_normal $1 $2
-                    ;;
-                conc)
-                    run_concurrent $1 $2
-                    ;;
-                [1-9] | [1-9][0-9][0-9])
-                    run_specify $1 $2
-                    ;;
-                *)
-                    echo -e "\n命令输入错误...\n"
-                    usage
-                    ;;
-            esac
-            ;;
-        4)
-            run_segment $1 $3 $4
-            ;;
-        5)
-            run_segment_leader $1 $3 $4 $5
-            ;;
-        *)
-            echo -e "\n命令过多...\n"
-            usage
-            ;;
-    esac
-}
 
-main "$@"
+## 命令检测
+case $# in
+    0)
+        echo
+        usage
+        ;;
+    1)
+        case $1 in
+            hangup)
+                run_hungup
+                ;;
+            resetpwd)
+                reset_user_password
+                ;;
+            runall)
+                run_all_jd_scripts
+                ;;
+            *)
+                run_normal $1
+                ;;
+        esac
+        ;;
+    2)
+        case $2 in
+            now)
+                run_normal $1 $2
+                ;;
+            conc)
+                run_concurrent $1 $2
+                ;;
+            [1-9] | [1-9][0-9] | [1-9][0-9][0-9])
+                run_specify $1 $2
+                ;;            
+            *)
+                echo -e "\n命令输入错误...\n"
+                usage
+                ;;
+        esac
+        ;;
+    4)
+        run_segment $1 $3 $4
+        ;;
+    5)
+        run_segment_leader $1 $3 $4 $5
+        ;;
+    *)
+        echo -e "\n命令过多...\n"
+        usage
+        ;;
+esac
