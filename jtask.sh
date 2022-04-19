@@ -117,9 +117,11 @@ usage () {
     echo -e "2.$cmd_jtask <js_name> now    # 依次执行，无论是否设置了随机延迟，均立即运行，前台会输出日志，同时记录在日志文件中"
     echo -e "3.$cmd_jtask <js_name> conc   # 并发执行，无论是否设置了随机延迟，均立即运行，前台不产生日志，直接记录在日志文件中"
     echo -e "4.$cmd_jtask <js_name> <num>  # num为某Cookie的编号，指定只以该Cookie运行脚本"
-    echo -e "5.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
-    echo -e "6.$cmd_jtask hangup           # 重启挂机程序"
-    echo -e "7.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
+    echo -e "5.$cmd_jtask <js_name> desi <num1> <num2>  # num1-num2是分段Cookie运行脚本"
+    echo -e "6.$cmd_jtask <js_name> desi <num1> <num2> <num3>  # num1是车头、num2-num3是分段Cookie运行脚本"
+    echo -e "7.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
+    echo -e "8.$cmd_jtask hangup           # 重启挂机程序"
+    echo -e "9.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
     echo -e "\notask命令运行 own 脚本，需要输入脚本的绝对路径或相对路径（定时任务中必须是绝对路径），otask会将该脚本复制到 scripts 目录下再运行，用法为："
     echo -e "1.$cmd_otask <js_path>        # 依次执行，如果设置了随机延迟并且当时时间不在0-2、30-31、59分内，将随机延迟一定秒数"
     echo -e "2.$cmd_otask <js_path> now    # 依次执行，无论是否设置了随机延迟，均立即运行，前台会输出日志，同时记录在日志文件中"
@@ -289,6 +291,88 @@ run_specify () {
     fi
 }
 
+run_segment() {
+    local p=$1
+    local start=$2
+    local end=$3
+    echo "$p $start $end"
+    find_file_and_path $p
+    if [[ $file_name ]] && [[ $which_path ]]; then
+        import_config_and_check "$file_name"
+        update_crontab
+        count_user_sum
+        make_dir $dir_log/$file_name
+        log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
+        echo -e "\n各账号间已经在后台开始分段执行，前台不输入日志，日志直接写入文件中。\n"
+        export_all_env all
+        $(>temp)
+        for ((user_num = 1; user_num <= $user_sum; user_num++)); do
+            for num in ${TempBlockCookie}; do
+                [[ $user_num -eq $num ]] && continue 2
+            done
+            if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
+                tmpIndex="Cookie"$user_num
+                eval echo -n '$'$tmpIndex'\&' >>temp
+            fi
+        done
+        tmpVal=$(cat temp)
+        tmpVal=${tmpVal%*'&'}
+#        echo $tmpVal
+        export JD_COOKIE=$tmpVal
+        log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
+        cd $which_path
+        node $file_name.js 2>&1 | tee $log_path
+        run_task_finish "$file_name" 2>&1 | tee -a $log_path
+    else
+        echo -e "\n $p 脚本不存在，请确认...\n"
+        usage
+    fi
+}
+
+## 并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
+run_segment_leader() {
+    local p=$1
+    local master=$2
+    local start=$3
+    local end=$4
+    echo "$p $master $start $end"
+    find_file_and_path $p
+    if [[ $file_name ]] && [[ $which_path ]]; then
+        import_config_and_check "$file_name"
+        update_crontab
+        count_user_sum
+        make_dir $dir_log/$file_name
+        log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
+        echo -e "\n各账号间已经在后台开始分段执行，前台不输入日志，日志直接写入文件中。\n"
+        export_all_env all
+        $(>temp)
+        for ((user_num = 1; user_num <= $user_sum; user_num++)); do
+            for num in ${TempBlockCookie}; do
+                [[ $user_num -eq $num ]] && continue 2
+            done
+            if [[ $user_num -eq $master ]]; then
+                tmpIndex="Cookie"$user_num
+                eval echo -n '$'$tmpIndex'\&' >>temp
+            fi
+            if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
+                tmpIndex="Cookie"$user_num
+                eval echo -n '$'$tmpIndex'\&' >>temp
+            fi
+        done
+        tmpVal=$(cat temp)
+        tmpVal=${tmpVal%*'&'}
+#        echo $tmpVal
+        export JD_COOKIE=$tmpVal
+        log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
+        cd $which_path
+        node $file_name.js 2>&1 | tee $log_path
+        run_task_finish "$file_name" 2>&1 | tee -a $log_path
+    else
+        echo -e "\n $p 脚本不存在，请确认...\n"
+        usage
+    fi
+}
+
 
 ## 命令检测
 case $# in
@@ -328,6 +412,12 @@ case $# in
                 usage
                 ;;
         esac
+        ;;
+    3)
+        run_segment $1 $3 $4
+        ;;
+    4)
+        run_segment_leader $1 $3 $4 $5
         ;;
     *)
         echo -e "\n命令过多...\n"
