@@ -46,6 +46,20 @@ combine_one () {
     done
 }
 
+## 运行自定义脚本
+run_task_finish () {
+    if [[ $EnableTaskFinishShell == true ]]; then
+        echo -e "\n--------------------------------------------------------------\n"
+        if [ -f $file_task_finish_shell ]; then
+            echo -e "开始执行$file_task_finish_shell...\n"
+            . $file_task_finish_shell
+            echo -e "$file_task_finish_shell执行完毕...\n"
+        else
+           echo -e "$file_task_finish_shell文件不存在，跳过执行...\n"
+        fi
+    fi
+}
+
 ## 转换JD_BEAN_SIGN_STOP_NOTIFY或JD_BEAN_SIGN_NOTIFY_SIMPLE
 trans_JD_BEAN_SIGN_NOTIFY () {
     case ${NotifyBeanSign} in
