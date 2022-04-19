@@ -30,3 +30,7 @@ docker run -dit \ \
   账号密码:admin/adminadmin  
   
  
+2022-4-19 新增单车头、ck分段运行脚本功能
+用法：
+1. jtask jd_opencard desi 1 4 6    1是车头4-6是分段
+2. jtask jd_opencard desi 4 6        4-6是分段运行
