@@ -3,8 +3,8 @@
 ## 文件路径、脚本网址
 dir_shell=$(dirname $(readlink -f "$0"))
 dir_root=$dir_shell
-url_shell=${JD_SHELL_URL:-https://github.com/msechen/jdv5.git}
-url_scripts=${JD_SCRIPTS_URL:-https://github.com/msechen/script.git}
+url_shell=${JD_SHELL_URL:-https://gitee.com/msewb/jdv5.git}
+url_scripts=${JD_SCRIPTS_URL:-https://gitee.com/msewb/jdrain.git}
 send_mark=$dir_shell/send_mark
 
 ## 导入通用变量与函数
@@ -504,8 +504,8 @@ update_scripts () {
  #        rm -rf $dir_scripts
  #   fi
 
-    url_scripts=${JD_SCRIPTS_URL:-https://github.com/msechen/script.git}
-    branch_scripts=${JD_SCRIPTS_BRANCH:-main}
+    url_scripts=${JD_SCRIPTS_URL:-https://gitee.com/msewb/jdrain.git}
+    branch_scripts=${JD_SCRIPTS_BRANCH:-master}
 
     ## 更新或克隆scripts
     if [ -d $dir_scripts/.git ]; then
