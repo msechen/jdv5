@@ -3,8 +3,8 @@
 ## 文件路径、脚本网址
 dir_shell=$(dirname $(readlink -f "$0"))
 dir_root=$dir_shell
-url_shell=${JD_SHELL_URL:-https://gitee.com/msewb/jdv5.git}
-url_scripts=${JD_SCRIPTS_URL:-https://gitee.com/msewb/jdrain.git}
+url_shell=${JD_SHELL_URL:-https://github.com/msechen/jdv5.git}
+url_scripts=${JD_SCRIPTS_URL:-https://github.com/msechen/script.git}
 send_mark=$dir_shell/send_mark
 
 ## 导入通用变量与函数
@@ -446,13 +446,9 @@ usage () {
 record_time () {
     echo "
 --------------------------------------------------------------
-
 系统时间：$(date "+%Y-%m-%d %H:%M:%S")
-
 脚本根目录：$dir_root
-
 jd_scripts目录：$dir_scripts
-
 own脚本目录：$dir_own
 "
 }
@@ -464,10 +460,10 @@ update_shell () {
     random_update_jup_cron
 
  ## 重置仓库romote url
-    if [[ $JD_DIR ]] && [[ $ENABLE_RESET_REPO_URL == true ]]; then
-       reset_romote_url $dir_shell $url_shell
-       reset_romote_url $dir_scripts $url_scripts
-    fi
+#    if [[ $JD_DIR ]] && [[ $ENABLE_RESET_REPO_URL == true ]]; then
+#       reset_romote_url $dir_shell $url_shell
+#       reset_romote_url $dir_scripts $url_scripts
+#    fi
    ## 记录bot程序md5
     jbot_md5sum_old=$(cd $dir_bot; find . -type f \( -name "*.py" -o -name "*.ttf" \) | xargs md5sum)
     
@@ -504,8 +500,8 @@ update_scripts () {
  #        rm -rf $dir_scripts
  #   fi
 
-    url_scripts=${JD_SCRIPTS_URL:-https://gitee.com/msewb/jdrain.git}
-    branch_scripts=${JD_SCRIPTS_BRANCH:-master}
+    url_scripts=${JD_SCRIPTS_URL:-https://github.com/msechen/script.git}
+    branch_scripts=${JD_SCRIPTS_BRANCH:-main}
 
     ## 更新或克隆scripts
     if [ -d $dir_scripts/.git ]; then
