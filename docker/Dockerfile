@@ -1,6 +1,6 @@
-    FROM node:15.9.0-alpine3.12
-    ARG JD_SHELL=https://gitee.com/msewb/jdv5.git
-    ARG JD_SHELL_BRANCH=master
+FROM node:15.9.0-alpine3.12
+    ARG JD_SHELL=https://github.com/msechen/jdv5.git
+    ARG JD_SHELL_BRANCH=main
     ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
         LANG=zh_CN.UTF-8 \
         SHELL=/bin/bash \
@@ -10,8 +10,8 @@
         ENABLE_WEB_PANEL=true \
         ENABLE_HANGUP=false \
         ENABLE_RESET_REPO_URL=true \
-        JD_SHELL_URL=https://gitee.com/msewb/jdv5.git \
-        JD_SCRIPTS_URL=https://gitee.com/msewb/jdrain.git
+        JD_SHELL_URL=https://github.com/msechen/jdv5.git \
+        JD_SCRIPTS_URL=https://github.com/msechen/script.git
     WORKDIR ${JD_DIR}
     RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
         && apk update -f \
