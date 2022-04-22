@@ -464,10 +464,10 @@ update_shell () {
     random_update_jup_cron
 
  ## 重置仓库romote url
-#    if [[ $JD_DIR ]] && [[ $ENABLE_RESET_REPO_URL == true ]]; then
-#       reset_romote_url $dir_shell $url_shell
-#       reset_romote_url $dir_scripts $url_scripts
-#    fi
+    if [[ $JD_DIR ]] && [[ $ENABLE_RESET_REPO_URL == true ]]; then
+       reset_romote_url $dir_shell $url_shell
+       reset_romote_url $dir_scripts $url_scripts
+    fi
    ## 记录bot程序md5
     jbot_md5sum_old=$(cd $dir_bot; find . -type f \( -name "*.py" -o -name "*.ttf" \) | xargs md5sum)
     
