@@ -81,6 +81,9 @@ FROM node:15.9.0-alpine3.12
         && pip3 install requests \
 	&& pip3 install telethon \
 	&& pip3 install PyExecJS \
+	&& pip3 install httpx \
+	&& pip3 install glom \
+	&& pip3 install httpx[http2] \
         && pip3 install telethon --upgrade
     WORKDIR ${JD_DIR}
     ENTRYPOINT ["docker-entrypoint.sh"]
