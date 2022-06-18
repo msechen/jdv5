@@ -13,7 +13,9 @@ docker（通用）安装方式二 \
 mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy scripts && cd ..
 
 2、执行以下命令
+
 A:拉主库版
+
 docker run -dit \
 -v $PWD/jdtrainv4bot/config:/jd/config \
 -v $PWD/jdtrainv4bot/log:/jd/log \
