@@ -16,38 +16,38 @@ mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy scripts && cd 
 
 A:拉主库版
 
-docker run -dit \
--v $PWD/jdtrainv4bot/config:/jd/config \
--v $PWD/jdtrainv4bot/log:/jd/log \
--v $PWD/jdtrainv4bot/own:/jd/own \
--v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \
--v $PWD/jdtrainv4bot/scripts:/jd/scripts \
--p 5678:5678 \
--e ENABLE_HANGUP=false \
--e ENABLE_WEB_PANEL=true \
--e ENABLE_WEB_TTYD=false \
--e ENABLE_TG_BOT=true \
---name jdjdtrainv4bot \
---hostname jdjdtrainv4bot \
---restart always \
+docker run -dit \ \
+-v $PWD/jdtrainv4bot/config:/jd/config \ \
+-v $PWD/jdtrainv4bot/log:/jd/log \ \
+-v $PWD/jdtrainv4bot/own:/jd/own \ \
+-v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \ \
+-v $PWD/jdtrainv4bot/scripts:/jd/scripts \ \
+-p 5678:5678 \ \
+-e ENABLE_HANGUP=false \ \
+-e ENABLE_WEB_PANEL=true \ \
+-e ENABLE_WEB_TTYD=false \ \
+-e ENABLE_TG_BOT=true \ \
+--name jdjdtrainv4bot \ \
+--hostname jdjdtrainv4bot \ \
+--restart always \ \
 abcdjd/jdtrain:v4-bot
 
 B：适用于无翻墙主机不拉主库版
 
-docker run -dit \
--v $PWD/jdtrainv4bot/config:/jd/config \
--v $PWD/jdtrainv4bot/log:/jd/log \
--v $PWD/jdtrainv4bot/own:/jd/own \
--v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \
--v $PWD/jdtrainv4bot/scripts:/jd/scripts \
--p 5678:5678 \
--e ENABLE_HANGUP=false \
--e ENABLE_WEB_PANEL=true \
--e ENABLE_WEB_TTYD=false \
--e ENABLE_TG_BOT=true \
---name jdjdtrainv4bot \
---hostname jdjdtrainv4bot \
---restart always \
+docker run -dit \ \
+-v $PWD/jdtrainv4bot/config:/jd/config \ \
+-v $PWD/jdtrainv4bot/log:/jd/log \ \
+-v $PWD/jdtrainv4bot/own:/jd/own \ \
+-v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \ \
+-v $PWD/jdtrainv4bot/scripts:/jd/scripts \ \
+-p 5678:5678 \ \
+-e ENABLE_HANGUP=false \ \
+-e ENABLE_WEB_PANEL=true \ \
+-e ENABLE_WEB_TTYD=false \ \
+-e ENABLE_TG_BOT=true \ \
+--name jdjdtrainv4bot \ \
+--hostname jdjdtrainv4bot \ \
+--restart always \ \
 abcdjd/jdtrainv4bot:norepos
   
   面板:http://ip:5678 \
