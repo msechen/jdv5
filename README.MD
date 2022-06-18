@@ -58,3 +58,6 @@ abcdjd/jdtrainv4bot:norepos
 用法：
 1. jtask jd_opencard desi 1 4 6    1是车头4-6是分段
 2. jtask jd_opencard desi 4 6        4-6是分段运行
+
+2022-6-18
+新增不拉库镜像，见上安装方式
