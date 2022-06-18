@@ -1,0 +1,22 @@
+name: "newDockermaker"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 */5 * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: newDockermaker
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          publish: true
+          imageName: abcdjd/test
+          dockerFile: docker/newDockermaker
+          platform: linux/amd64,linux/arm64,linux/arm/v7
+          tag: test
+          dockerUser: ${{ secrets.DOCKER_USERNAME }}
+          dockerPassword: ${{ secrets.DOCKER_PASSWORD }}
