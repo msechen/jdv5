@@ -56,8 +56,10 @@ abcdjd/jdtrainv4bot:norepos
 更新：\
 2022-4-19 新增单车头、ck分段运行脚本功能\
 用法：
-1. jtask jd_opencard desi 1 4 6    1是车头4-6是分段
-2. jtask jd_opencard desi 4 6        4-6是分段运行
+1. jtask jd_opencard desi 1 4 6    \
+   1是车头、4和6是分别是分段ck起始和结束顺序
+2. jtask jd_opencard desi 4 6       \
+   4和6是分别是分段ck起始和结束顺序
 
 2022-6-18
 新增不拉库镜像，见上安装方式
