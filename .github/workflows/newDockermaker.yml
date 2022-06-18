@@ -15,7 +15,7 @@ jobs:
         with:
           publish: true
           imageName: abcdjd/test
-          dockerFile: docker/newDockermaker
+          dockerFile: docker/newDockerfile
           platform: linux/amd64,linux/arm64,linux/arm/v7
           tag: test
           dockerUser: ${{ secrets.DOCKER_USERNAME }}
