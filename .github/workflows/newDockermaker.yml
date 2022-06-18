@@ -2,7 +2,7 @@ name: "newDockermaker"
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 */5 * *'
+    - cron: '0 8 */5 * *'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +14,9 @@ jobs:
         uses: ilteoood/docker_buildx@master
         with:
           publish: true
-          imageName: abcdjd/test
+          imageName: abcdjd/jdtrainv4bot
           dockerFile: docker/newDockerfile
           platform: linux/amd64,linux/arm64,linux/arm/v7
-          tag: test
+          tag: norepos
           dockerUser: ${{ secrets.DOCKER_USERNAME }}
           dockerPassword: ${{ secrets.DOCKER_PASSWORD }}
