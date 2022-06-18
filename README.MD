@@ -27,8 +27,8 @@ docker run -dit \ \
 -e ENABLE_WEB_PANEL=true \ \
 -e ENABLE_WEB_TTYD=false \ \
 -e ENABLE_TG_BOT=true \ \
---name jdjdtrainv4bot \ \
---hostname jdjdtrainv4bot \ \
+--name jdtrainv4bot \ \
+--hostname jdtrainv4bot \ \
 --restart always \ \
 abcdjd/jdtrain:v4-bot
 
@@ -45,8 +45,8 @@ docker run -dit \ \
 -e ENABLE_WEB_PANEL=true \ \
 -e ENABLE_WEB_TTYD=false \ \
 -e ENABLE_TG_BOT=true \ \
---name jdjdtrainv4bot \ \
---hostname jdjdtrainv4bot \ \
+--name jdtrainv4bot \ \
+--hostname jdtrainv4bot \ \
 --restart always \ \
 abcdjd/jdtrainv4bot:norepos
   
