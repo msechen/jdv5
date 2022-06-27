@@ -50,7 +50,7 @@ docker run -dit \ \
 --name jdtrainv4bot \ \
 --hostname jdtrainv4bot \ \
 --restart always \ \
-abcdjd/jdtrainv4bot:norepos
+abcdjd/jdtrainv4bot:norepo
   
   面板:http://ip:5678 \
   账号密码:admin/adminadmin  
