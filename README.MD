@@ -8,9 +8,9 @@ docker-compose（适合支持docker-compose的环境）安装方式一 \
 3、docker-compose up -d 
 
 docker（通用）安装方式二 \
-1、新建映射用到的目录，下面/jdtrainv4bot/config、/jdtrainv4bot/log、/jdtrainv4bot/own、/jdtrainv4bot/diy、/jdtrainv4bot/scripts替换你新建的目录
+1、新建映射用到的目录，下面/jdtrainv4bot/config、/jdtrainv4bot/log、/jdtrainv4bot/own、/jdtrainv4bot/diy、/jdtrainv4bot/user、/jdtrainv4bot/scripts替换你新建的目录
 
-mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy scripts && cd ..
+mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy user scripts && cd ..
 
 2、执行以下命令
 
@@ -20,6 +20,7 @@ docker run -dit \ \
 -v $PWD/jdtrainv4bot/config:/jd/config \ \
 -v $PWD/jdtrainv4bot/log:/jd/log \ \
 -v $PWD/jdtrainv4bot/own:/jd/own \ \
+-v $PWD/jdtrainv4bot/user:/jd/user \ \
 -v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \ \
 -v $PWD/jdtrainv4bot/scripts:/jd/scripts \ \
 -p 5678:5678 \ \
@@ -38,6 +39,7 @@ docker run -dit \ \
 -v $PWD/jdtrainv4bot/config:/jd/config \ \
 -v $PWD/jdtrainv4bot/log:/jd/log \ \
 -v $PWD/jdtrainv4bot/own:/jd/own \ \
+-v $PWD/jdtrainv4bot/user:/jd/user \ \
 -v $PWD/jdtrainv4bot/diy:/jd/jbot/diy \ \
 -v $PWD/jdtrainv4bot/scripts:/jd/scripts \ \
 -p 5678:5678 \ \
