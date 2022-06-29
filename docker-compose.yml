@@ -6,15 +6,15 @@ services:
     restart: always
     tty: true
     volumes:
-      - /jdtrainv4bot/config:/jd/config
-      - /jdtrainv4bot/log:/jd/log
-      - /jdtrainv4bot/own:/jd/own
-      - /jdtrainv4bot/diy:/jd/jbot/diy
-      - /jdtrainv4bot/scripts:/jd/scripts
+      - $PWD/jdtrainv4bot/config:/jd/config
+      - $PWD/jdtrainv4bot/log:/jd/log
+      - $PWD/jdtrainv4bot/own:/jd/own
+      - $PWD/jdtrainv4bot/diy:/jd/jbot/diy
+      - $PWD/jdtrainv4bot/scripts:/jd/scripts
     ports:
       - 5678:5678
     environment:
       - ENABLE_HANGUP=false
       - ENABLE_WEB_PANEL=true
-      - ENABLE_WEB_TTYD=false
+      - ENABLE_WEB_TTYD=true
       - ENABLE_TG_BOT=true
