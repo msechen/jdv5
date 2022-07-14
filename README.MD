@@ -10,7 +10,7 @@ docker-compose（适合支持docker-compose的环境）安装方式一 \
 docker（通用）安装方式二 \
 1、新建映射用到的目录，下面/jdtrainv4bot/config、/jdtrainv4bot/log、/jdtrainv4bot/own、/jdtrainv4bot/diy、/jdtrainv4bot/user、/jdtrainv4bot/scripts替换你新建的目录
 
-mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy user scripts && cd ..
+cd / && mkdir jdtrainv4bot && cd jdtrainv4bot && mkdir config log own diy user scripts && cd ..
 
 2、执行以下命令
 
