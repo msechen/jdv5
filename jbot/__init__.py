@@ -65,9 +65,9 @@ if PROXY_START and BOT.get('noretry') and BOT['noretry']:
                            proxy=proxy).start(bot_token=TOKEN)
 elif PROXY_START:
     jdbot = TelegramClient('bot', API_ID, API_HASH, connection=connectionType,
-                           proxy=proxy, connection_retries=None).start(bot_token=TOKEN)
+                           proxy=proxy, auto_reconnect=True, retry_delay=1,connection_retries=99).start(bot_token=TOKEN)
 elif BOT.get('noretry') and BOT['noretry']:
     jdbot = TelegramClient('bot', API_ID, API_HASH).start(bot_token=TOKEN)
 else:
     jdbot = TelegramClient('bot', API_ID, API_HASH,
-                           connection_retries=None).start(bot_token=TOKEN)
+                           auto_reconnect=True, retry_delay=1,connection_retries=99).start(bot_token=TOKEN)
