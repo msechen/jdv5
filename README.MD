@@ -55,6 +55,10 @@ abcdjd/jdtrainv4bot:norepo
   面板:http://ip:5678 \
   账号密码:admin/adminadmin  
   
+
+<h1>面板使用三方上车对接的接口：http(s)://ip:port/updateCookie</h1>
+
+  
 更新：\
 2022-4-19 新增单车头、ck分段运行脚本功能\
 用法：
