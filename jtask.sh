@@ -311,6 +311,8 @@ run_segment() {
     local start=$2
     local end=$3
     echo "$p $start $end"
+    start_array=(${start//-/ })
+    end_array=(${end//-/ })
     find_file_and_path $p
     if [[ $file_name ]] && [[ $which_path ]]; then
         import_config_and_check "$file_name"
@@ -318,21 +320,40 @@ run_segment() {
         count_user_sum
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
-        echo -e "\n各账号间已经在后台开始分段执行，前台不输入日志，日志直接写入文件中。\n"
+        echo -e "\n各账号间已经在后台开始分段执行，日志直接写入文件中。\n"
         export_all_env all
-        $(>temp)
+        $(>tttt)
         for ((user_num = 1; user_num <= $user_sum; user_num++)); do
             for num in ${TempBlockCookie}; do
                 [[ $user_num -eq $num ]] && continue 2
             done
-            if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
-                tmpIndex="Cookie"$user_num
-                eval echo -n '$'$tmpIndex'\&' >>temp
+            if [[ $start =~ '-' ]]; then
+                if [[ $user_num -ge start_array[0] ]] && [[ $user_num -le start_array[1] ]]; then
+                    tmpIndex="Cookie"$user_num
+                    eval echo -n '$'$tmpIndex'\&' >>tttt
+                fi
+            else
+                if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
+                    tmpIndex="Cookie"$user_num
+                    eval echo -n '$'$tmpIndex'\&' >>tttt
+                fi
+            fi
+
+            if [[ $end =~ '-' ]]; then
+                if [[ $user_num -ge end_array[0] ]] && [[ $user_num -le end_array[1] ]]; then
+                    tmpIndex="Cookie"$user_num
+                    eval echo -n '$'$tmpIndex'\&' >>tttt
+                fi
+            else
+                if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
+                    tmpIndex="Cookie"$user_num
+                    eval echo -n '$'$tmpIndex'\&' >>tttt
+                fi
             fi
         done
-        tmpVal=$(cat temp)
+        tmpVal=$(cat tttt)
         tmpVal=${tmpVal%*'&'}
-#        echo $tmpVal
+        #        echo $tmpVal
         export JD_COOKIE=$tmpVal
         log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
         cd $which_path
@@ -344,12 +365,15 @@ run_segment() {
     fi
 }
 
-## 带车头分段执行，并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
+## 并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
 run_segment_leader() {
     local p=$1
     local master=$2
     local start=$3
     local end=$4
+    master_array=(${master//-/ })
+    start_array=(${start//-/ })
+    end_array=(${end//-/ })
     echo "$p $master $start $end"
     find_file_and_path $p
     if [[ $file_name ]] && [[ $which_path ]]; then
@@ -376,7 +400,7 @@ run_segment_leader() {
         done
         tmpVal=$(cat temp)
         tmpVal=${tmpVal%*'&'}
-#        echo $tmpVal
+        #        echo $tmpVal
         export JD_COOKIE=$tmpVal
         log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
         cd $which_path
