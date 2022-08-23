@@ -132,7 +132,7 @@ usage () {
     echo -e "3.$cmd_jtask <js_name> conc   # 并发执行，无论是否设置了随机延迟，均立即运行，前台不产生日志，直接记录在日志文件中"
     echo -e "4.$cmd_jtask <js_name> <num>  # num为某Cookie的编号，指定只以该Cookie运行脚本"
     echo -e "5.$cmd_jtask <js_name> desi <num1> <num2>  # num1-num2是分段Cookie运行脚本"
-    echo -e "6.$cmd_jtask <js_name> desi <num1> <num2> <num3>  # num1是车头、num2-num3是分段Cookie运行脚本"
+    echo -e "6.$cmd_jtask <js_name> desi <num1>-<num2> <num3>-<num4>  # num1-num2是车头、num3-num4是分段Cookie运行脚本"
     echo -e "7.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
     echo -e "8.$cmd_jtask hangup           # 重启挂机程序"
     echo -e "9.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
