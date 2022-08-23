@@ -132,7 +132,7 @@ usage () {
     echo -e "3.$cmd_jtask <js_name> conc   # 并发执行，无论是否设置了随机延迟，均立即运行，前台不产生日志，直接记录在日志文件中"
     echo -e "4.$cmd_jtask <js_name> <num>  # num为某Cookie的编号，指定只以该Cookie运行脚本"
     echo -e "5.$cmd_jtask <js_name> desi <num1> <num2>  # num1-num2是分段Cookie运行脚本"
-    echo -e "6.$cmd_jtask <js_name> desi <num1>-<num2> <num3>-<num4>  # num1-num2是车头、num3-num4是分段Cookie运行脚本"
+    echo -e "6.$cmd_jtask <js_name> desi <num1> <num2> <num3>  # num1是车头、num2-num3是分段Cookie运行脚本"
     echo -e "7.$cmd_jtask runall           # 依次运行所有jd_scripts中的非挂机脚本，非常耗时"
     echo -e "8.$cmd_jtask hangup           # 重启挂机程序"
     echo -e "9.$cmd_jtask resetpwd         # 重置控制面板用户名和密码"
@@ -311,8 +311,6 @@ run_segment() {
     local start=$2
     local end=$3
     echo "$p $start $end"
-    start_array=(${start//-/ })
-    end_array=(${end//-/ })
     find_file_and_path $p
     if [[ $file_name ]] && [[ $which_path ]]; then
         import_config_and_check "$file_name"
@@ -320,40 +318,21 @@ run_segment() {
         count_user_sum
         make_dir $dir_log/$file_name
         log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
-        echo -e "\n各账号间已经在后台开始分段执行，日志直接写入文件中。\n"
+        echo -e "\n各账号间已经在后台开始分段执行，前台不输入日志，日志直接写入文件中。\n"
         export_all_env all
-        $(>tttt)
+        $(>temp)
         for ((user_num = 1; user_num <= $user_sum; user_num++)); do
             for num in ${TempBlockCookie}; do
                 [[ $user_num -eq $num ]] && continue 2
             done
-            if [[ $start =~ '-' ]]; then
-                if [[ $user_num -ge start_array[0] ]] && [[ $user_num -le start_array[1] ]]; then
-                    tmpIndex="Cookie"$user_num
-                    eval echo -n '$'$tmpIndex'\&' >>tttt
-                fi
-            else
-                if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
-                    tmpIndex="Cookie"$user_num
-                    eval echo -n '$'$tmpIndex'\&' >>tttt
-                fi
-            fi
-
-            if [[ $end =~ '-' ]]; then
-                if [[ $user_num -ge end_array[0] ]] && [[ $user_num -le end_array[1] ]]; then
-                    tmpIndex="Cookie"$user_num
-                    eval echo -n '$'$tmpIndex'\&' >>tttt
-                fi
-            else
-                if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
-                    tmpIndex="Cookie"$user_num
-                    eval echo -n '$'$tmpIndex'\&' >>tttt
-                fi
+            if [[ $user_num -ge $start ]] && [[ $user_num -le $end ]]; then
+                tmpIndex="Cookie"$user_num
+                eval echo -n '$'$tmpIndex'\&' >>temp
             fi
         done
-        tmpVal=$(cat tttt)
+        tmpVal=$(cat temp)
         tmpVal=${tmpVal%*'&'}
-        #        echo $tmpVal
+#        echo $tmpVal
         export JD_COOKIE=$tmpVal
         log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
         cd $which_path
@@ -365,15 +344,12 @@ run_segment() {
     fi
 }
 
-## 并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
+## 带车头分段执行，并发执行时，设定的 RandomDelay 不会生效，即所有任务立即执行
 run_segment_leader() {
     local p=$1
     local master=$2
     local start=$3
     local end=$4
-    master_array=(${master//-/ })
-    start_array=(${start//-/ })
-    end_array=(${end//-/ })
     echo "$p $master $start $end"
     find_file_and_path $p
     if [[ $file_name ]] && [[ $which_path ]]; then
@@ -400,7 +376,7 @@ run_segment_leader() {
         done
         tmpVal=$(cat temp)
         tmpVal=${tmpVal%*'&'}
-        #        echo $tmpVal
+#        echo $tmpVal
         export JD_COOKIE=$tmpVal
         log_path="$dir_log/$file_name/${log_time}_${master}_${slave}.log"
         cd $which_path
