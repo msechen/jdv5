@@ -6,15 +6,32 @@ from .utils import press_event, backup_file, add_cron, cmd, DIY_DIR, TASK_CMD, V
 
 @jdbot.on(events.NewMessage(from_users=chat_id))
 async def bot_get_file(event):
-    '''定义文件操作'''
+    """定义文件操作"""
     try:
         v4btn = [[Button.inline('放入config', data=CONFIG_DIR), Button.inline('放入scripts', data=SCRIPTS_DIR), Button.inline('放入OWN文件夹', data=DIY_DIR)], [
             Button.inline('放入scripts并运行', data='node1'), Button.inline('放入OWN并运行', data='node'), Button.inline('取消', data='cancel')]]
-        btn = [[Button.inline('放入config', data=CONFIG_DIR), Button.inline('放入scripts', data=SCRIPTS_DIR)], [
-            Button.inline('放入scripts并运行', data='node1'), Button.inline('取消', data='cancel')]]
+        btn = [
+            [
+                Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
+                Button.inline('放入zy并运行', data='nodezy'),
+            ],
+            [
+                Button.inline('放入AutoRun', data=f'{SCRIPTS_DIR}/AutoDownload'),
+                Button.inline('放入AutoRun并运行', data='nodeAutoRun'),
+            ],
+            [
+                Button.inline('放入diy', data=f'/jd/jbot/diy'),
+            ],
+            [
+                Button.inline('放入scripts', data=SCRIPTS_DIR),
+                Button.inline('放入scripts并运行', data='node1'),
+            ],
+            [
+                Button.inline('放入config', data=CONFIG_DIR),
+                Button.inline('取消', data='cancel'),
+            ]]
         SENDER = event.sender_id
         if event.message.file:
-            markup = []
             filename = event.message.file.name
             cmdtext = None
             async with jdbot.conversation(SENDER, timeout=180) as conv:
@@ -56,6 +73,39 @@ async def bot_get_file(event):
                             await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, SCRIPTS_DIR)
                         else:
                             await jdbot.edit_message(msg, '脚本已保存到SCRIPTS文件夹，并成功运行')
+                        conv.cancel()
+                    elif res == 'nodezy':
+                        backup_file(f'{SCRIPTS_DIR}/zy/{filename}')
+                        await jdbot.download_media(event.message, f'{SCRIPTS_DIR}/zy')
+                        with open(f'{SCRIPTS_DIR}/zy/{filename}', 'r', encoding='utf-8') as f:
+                            resp = f.read()
+                        cmdtext = f'{TASK_CMD} {SCRIPTS_DIR}/zy/{filename} now'
+                        if res2 == 'yes':
+                            await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'{SCRIPTS_DIR}/zy')
+                        else:
+                            await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/my_js文件夹，并成功运行')
+                        conv.cancel()
+                    elif res == 'nodeAutoRun':
+                        backup_file(f'{SCRIPTS_DIR}/AutoDownload/{filename}')
+                        await jdbot.download_media(event.message, f'{SCRIPTS_DIR}/AutoDownload')
+                        with open(f'{SCRIPTS_DIR}/AutoDownload/{filename}', 'r', encoding='utf-8') as f:
+                            resp = f.read()
+                        cmdtext = f'{TASK_CMD} {SCRIPTS_DIR}/AutoDownload/{filename} now'
+                        if res2 == 'yes':
+                            await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'{SCRIPTS_DIR}/AutoDownload')
+                        else:
+                            await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/AutoDownload文件夹，并成功运行')
+                        conv.cancel()
+                    elif res == 'nodeuser':
+                        backup_file(f'/jd/jbot/diy/{filename}')
+                        await jdbot.download_media(event.message, f'/jd/jbot/diy')
+                        with open(f'/jd/jbot/diy/{filename}', 'r', encoding='utf-8') as f:
+                            resp = f.read()
+                        cmdtext = f'{TASK_CMD} /jd/jbot/diy/{filename} now'
+                        if res2 == 'yes':
+                            await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'/jd/jbot/diy')
+                        else:
+                            await jdbot.edit_message(msg, f'脚本已保存到/jd/jbot/diy文件夹，并成功运行')
                         conv.cancel()
                     else:
                         backup_file(f'{res}/{filename}')
