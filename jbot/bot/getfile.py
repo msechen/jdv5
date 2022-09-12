@@ -8,8 +8,26 @@ from .utils import press_event, backup_file, add_cron, cmd, DIY_DIR, TASK_CMD, V
 async def bot_get_file(event):
     """定义文件操作"""
     try:
-        v4btn = [[Button.inline('放入config', data=CONFIG_DIR), Button.inline('放入scripts', data=SCRIPTS_DIR), Button.inline('放入OWN文件夹', data=DIY_DIR)], [
-            Button.inline('放入scripts并运行', data='node1'), Button.inline('放入OWN并运行', data='node'), Button.inline('取消', data='cancel')]]
+        v4btn = [
+            [
+                Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
+                Button.inline('放入zy并运行', data='nodezy'),
+            ],
+            [
+                Button.inline('放入AutoRun', data=f'{SCRIPTS_DIR}/AutoDownload'),
+                Button.inline('放入AutoRun并运行', data='nodeAutoRun'),
+            ],
+            [
+                Button.inline('放入diy', data=f'/jd/jbot/diy'),
+            ],
+            [
+                Button.inline('放入scripts', data=SCRIPTS_DIR),
+                Button.inline('放入scripts并运行', data='node1'),
+            ],
+            [
+                Button.inline('放入config', data=CONFIG_DIR),
+                Button.inline('取消', data='cancel'),
+            ]]
         btn = [
             [
                 Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
