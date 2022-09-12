@@ -10,6 +10,10 @@ async def bot_get_file(event):
     try:
         v4btn = [
             [
+                Button.inline('放入own', data=f'/jd/own'),
+                Button.inline('放入own并运行', data='node'),
+            ],
+            [
                 Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
                 Button.inline('放入zy并运行', data='nodezy'),
             ],
@@ -19,6 +23,7 @@ async def bot_get_file(event):
             ],
             [
                 Button.inline('放入diy', data=f'/jd/jbot/diy'),
+                Button.inline('放入diy并运行', data='nodeuser'),
             ],
             [
                 Button.inline('放入scripts', data=SCRIPTS_DIR),
@@ -30,6 +35,10 @@ async def bot_get_file(event):
             ]]
         btn = [
             [
+                Button.inline('放入own', data=f'/jd/own'),
+                Button.inline('放入own并运行', data='node'),
+            ],
+            [
                 Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
                 Button.inline('放入zy并运行', data='nodezy'),
             ],
@@ -39,6 +48,7 @@ async def bot_get_file(event):
             ],
             [
                 Button.inline('放入diy', data=f'/jd/jbot/diy'),
+                Button.inline('放入diy并运行', data='nodeuser'),
             ],
             [
                 Button.inline('放入scripts', data=SCRIPTS_DIR),
@@ -71,10 +81,10 @@ async def bot_get_file(event):
                     convdata2 = await conv.wait_event(press_event(SENDER))
                     res2 = bytes.decode(convdata2.data)
                     if res == 'node':
-                        backup_file(f'{DIY_DIR}/{filename}')
+                        backup_file(f'/jd/jbot/diy/{filename}')
                         await jdbot.download_media(event.message, DIY_DIR)
-                        cmdtext = f'{TASK_CMD} {DIY_DIR}/{filename} now'
-                        with open(f'{DIY_DIR}/{filename}', 'r', encoding='utf-8') as f:
+                        cmdtext = f'{TASK_CMD} /jd/jbot/diy/{filename} now'
+                        with open(f'/jd/jbot/diy/{filename}', 'r', encoding='utf-8') as f:
                             resp = f.read()
                         if res2 == 'yes':
                             await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, DIY_DIR)
