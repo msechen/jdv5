@@ -14,6 +14,10 @@ async def bot_get_file(event):
                 Button.inline('放入own并运行', data='node'),
             ],
             [
+                Button.inline('放入raw', data=f'/jd/own/raw'),
+                Button.inline('放入raw并运行', data='node2'),
+            ],
+            [
                 Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
                 Button.inline('放入zy并运行', data='nodezy'),
             ],
@@ -37,6 +41,10 @@ async def bot_get_file(event):
             [
                 Button.inline('放入own', data=f'/jd/own'),
                 Button.inline('放入own并运行', data='node'),
+            ],
+            [
+                Button.inline('放入raw', data=f'/jd/own/raw'),
+                Button.inline('放入raw并运行', data='node2'),
             ],
             [
                 Button.inline('放入zy', data=f'{SCRIPTS_DIR}/zy'),
@@ -81,15 +89,15 @@ async def bot_get_file(event):
                     convdata2 = await conv.wait_event(press_event(SENDER))
                     res2 = bytes.decode(convdata2.data)
                     if res == 'node':
-                        backup_file(f'/jd/jbot/diy/{filename}')
+                        backup_file(f'/jd/own/{filename}')
                         await jdbot.download_media(event.message, DIY_DIR)
-                        cmdtext = f'{TASK_CMD} /jd/jbot/diy/{filename} now'
-                        with open(f'/jd/jbot/diy/{filename}', 'r', encoding='utf-8') as f:
+                        cmdtext = f'{TASK_CMD} /jd/own/{filename} now'
+                        with open(f'/jd/own/{filename}', 'r', encoding='utf-8') as f:
                             resp = f.read()
                         if res2 == 'yes':
                             await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, DIY_DIR)
                         else:
-                            await jdbot.edit_message(msg, '脚本已保存到DIY文件夹，并成功运行')
+                            await jdbot.edit_message(msg, '脚本已保存到own文件夹，并成功运行')
                         conv.cancel()
                     elif res == 'node1':
                         backup_file(f'{SCRIPTS_DIR}/{filename}')
@@ -112,6 +120,17 @@ async def bot_get_file(event):
                             await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'{SCRIPTS_DIR}/zy')
                         else:
                             await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/my_js文件夹，并成功运行')
+                        conv.cancel()
+                    if res == 'node2':
+                        backup_file(f'/jd/own/raw/{filename}')
+                        await jdbot.download_media(event.message, DIY_DIR)
+                        cmdtext = f'{TASK_CMD} /jd/own/raw/{filename} now'
+                        with open(f'/jd/own/raw/{filename}', 'r', encoding='utf-8') as f:
+                            resp = f.read()
+                        if res2 == 'yes':
+                            await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, DIY_DIR)
+                        else:
+                            await jdbot.edit_message(msg, '脚本已保存到raw文件夹，并成功运行')
                         conv.cancel()
                     elif res == 'nodeAutoRun':
                         backup_file(f'{SCRIPTS_DIR}/AutoDownload/{filename}')
