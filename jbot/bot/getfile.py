@@ -121,7 +121,7 @@ async def bot_get_file(event):
                         else:
                             await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/my_js文件夹，并成功运行')
                         conv.cancel()
-                    if res == 'node2':
+                    elif res == 'node2':
                         backup_file(f'/jd/own/raw/{filename}')
                         await jdbot.download_media(event.message, DIY_DIR)
                         cmdtext = f'{TASK_CMD} /jd/own/raw/{filename} now'
