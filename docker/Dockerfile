@@ -83,6 +83,7 @@ FROM node:15.9.0-alpine3.12
 	&& npm i -S moment \
 	&& npm i -S tunnel \
         && npm i -g cnpm \
+	&& npm i -S node-file-cache \
         && cnpm i \
         && cnpm i -g typescript  \
         && cnpm i -g ts-node \   
