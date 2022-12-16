@@ -26,17 +26,9 @@ FROM node:15.9.0-alpine3.12
                                  perl \
                                  openssh-client \
 				 python3 \
-				 python3-dev \				 
 		                 py3-pip \
-		                 py-pip \
 				 zlib-dev \
                                  jpeg-dev \
-                                 gcc \
-				 py-pip \
-				 mysql-dev \
-				 linux-headers \
-				 libffi-dev \
-				 openssl-dev \				 
 	&& apk add --no-cache --virtual .build \
         			 gcc \
         			 python3-dev \
@@ -68,7 +60,7 @@ FROM node:15.9.0-alpine3.12
         && rm -rf /root/.npm \
 	&& apk del .build \
         && rm -rf /root/.cache \
-	&& npm i -g ttyd \
+	&&  npm i -g ttyd \
 	&& npm i -S png-js \
 	&& npm i -S jsdom \
 	&& npm i -S date-fns \
@@ -83,7 +75,6 @@ FROM node:15.9.0-alpine3.12
 	&& npm i -S moment \
 	&& npm i -S tunnel \
         && npm i -g cnpm \
-	&& npm i -S node-file-cache \
         && cnpm i \
         && cnpm i -g typescript  \
         && cnpm i -g ts-node \   
@@ -91,12 +82,8 @@ FROM node:15.9.0-alpine3.12
 	&& pip3 install telethon \
 	&& pip3 install PyExecJS \
 	&& pip3 install httpx \
-	&& pip3 install pycrypto \
 	&& pip3 install glom \
-	&& pip3 install wheel \
-	&& pip3 install paramiko \
 	&& pip3 install httpx[http2] \
-        && pip3 install telethon --upgrade \
-        && pip3 install --upgrade pip
+        && pip3 install telethon --upgrade
     WORKDIR ${JD_DIR}
     ENTRYPOINT ["docker-entrypoint.sh"]
