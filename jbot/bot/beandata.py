@@ -40,15 +40,13 @@ def gen_params(page):
     }
     return params
 
-
 def get_beans_7days(ck):
     try:
         day_7 = True
         page = 0
-        headers = {
-            "Host": "api.m.jd.com",
+        headers = {            
             "Content-Type": "application/x-www-form-urlencoded;",           
-            "User-Agent": "jdapp;android;10.1.6;9;network/wifi;Mozilla/5.0 (Linux; Android 9; MI 6 Build/PKQ1.190118.001; wv)",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 12; SM-G9880) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Mobile Safari/537.36 EdgA/106.0.1370.47",
             "Cookie": ck
         }
         days = []
@@ -59,13 +57,13 @@ def get_beans_7days(ck):
         beans_out = {key: 0 for key in days}
         
         while day_7:
-            page = page + 1
-            url="https://api.m.jd.com/client.action?functionId=getJingBeanBalanceDetail&body=%7B%22pageSize%22%3A%2220%22%2C%22page%22%3A%22"+str(page)+"%22%7D&appid=ld"
-            resp = session.get(url,headers=headers, timeout=100).text
+            page = page + 1            
+            url="https://bean.m.jd.com/beanDetail/detail.json?page="+str(page)
+            resp = session.get(url,headers=headers, timeout=100).text           
             amount=0
             res = json.loads(resp)
             if res['code'] == "0":
-                for i in res['detailList']:
+                for i in res['jingDetailList']:
                     amount=int(i['amount'])
                     for date in days:                        
                         if str(date) in i['date'] and amount > 0:
@@ -88,18 +86,19 @@ def get_beans_7days(ck):
 def get_total_beans(ck):
     try:
         headers = {
-            "Host": "wxapp.m.jd.com",
+            "Accept": "application/json,text/plain, */*",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "zh-cn",
             "Connection": "keep-alive",
-            "charset": "utf-8",
-            "User-Agent": "Mozilla/5.0 (Linux; Android 10; MI 9 Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.62 XWEB/2797 MMWEBSDK/201201 Mobile Safari/537.36 MMWEBID/7986 MicroMessenger/8.0.1840(0x2800003B) Process/appbrand4 WeChat/arm64 Weixin NetType/4G Language/zh_CN ABI/arm64 MiniProgramEnv/android",
-            "Content-Type": "application/x-www-form-urlencoded;",
-            "Accept-Encoding": "gzip, compress, deflate, br",
             "Cookie": ck,
+            "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 12; SM-G9880) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Mobile Safari/537.36 EdgA/106.0.1370.47"
         }
-        jurl = "https://wxapp.m.jd.com/kwxhome/myJd/home.json"
+        jurl = "https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2"
         resp = session.get(jurl, headers=headers, timeout=100).text
-        res = json.loads(resp)
-        return res['user']['jingBean'],res['user']['petName'],res['user']['imgUrl']
+        res = json.loads(resp)       
+        return res['base']['jdNum'],res['base']['nickname'],'http://storage.360buyimg.com/i.imageUpload/b6adc6e4bbaa31363437393935323238323435_mid.jpg'
     except Exception as e:
         logger.error(str(e))
 
