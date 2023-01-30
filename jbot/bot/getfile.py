@@ -34,6 +34,10 @@ async def bot_get_file(event):
                 Button.inline('放入scripts并运行', data='node1'),
             ],
             [
+                Button.inline('放入parse', data=f'{SCRIPTS_DIR}/parse/jd'),
+                Button.inline('放入parse并运行', data='parse'),
+            ], 
+            [
                 Button.inline('放入config', data=CONFIG_DIR),
                 Button.inline('取消', data='cancel'),
             ]]
@@ -119,8 +123,19 @@ async def bot_get_file(event):
                         if res2 == 'yes':
                             await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'{SCRIPTS_DIR}/zy')
                         else:
-                            await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/my_js文件夹，并成功运行')
+                            await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/zy文件夹，并成功运行')
                         conv.cancel()
+                    elif res == 'parse':
+                        backup_file(f'{SCRIPTS_DIR}/parse/jd/{filename}')
+                        await jdbot.download_media(event.message, f'{SCRIPTS_DIR}/parse/jd')
+                        with open(f'{SCRIPTS_DIR}/parse/jd/{filename}', 'r', encoding='utf-8') as f:
+                            resp = f.read()
+                        cmdtext = f'sh /jd/scripts/kedayaupdate.sh && {TASK_CMD} {filename} now'
+                        if res2 == 'yes':
+                            await add_cron(jdbot, conv, resp, filename, msg, SENDER, markup, f'{SCRIPTS_DIR}/parse/jd')
+                        else:
+                            await jdbot.edit_message(msg, f'脚本已保存到{SCRIPTS_DIR}/parse/jd文件夹，并成功运行')
+                        conv.cancel()      
                     elif res == 'node2':
                         backup_file(f'/jd/own/raw/{filename}')
                         await jdbot.download_media(event.message, DIY_DIR)
