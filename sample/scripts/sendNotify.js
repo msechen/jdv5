@@ -393,6 +393,7 @@ function tgBotNotify(text, desp) {
             chat_id: `${TG_USER_ID}`,
             text: `${text}\n\n${desp}`,
             disable_web_page_preview:true,
+            parse_mode:"html",
           },
         headers: {
           'Content-Type': 'application/json',
