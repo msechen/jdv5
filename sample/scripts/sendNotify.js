@@ -182,7 +182,7 @@ if (process.env.appToken) {
  * @param author 作者仓库等信息  例：`本脚本免费使用 By：xxxx`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(text, desp, params = {}, author = `\n\n自助查卷搜索隐藏优惠\n入口：https://u.jd.com/ctC4yfX\n优惠雷达 扫描降价商品️\n入口：https://u.jd.com/cCC4YMY\n${format(Date.now(), "yyyy-MM-dd HH:mm:ss")}`) {
+async function sendNotify(text, desp, params = {}, author = `\n\nwskey上车 http://ck.jdauto.cf:8080/\nmck上车 http://ck.jdauto.cf/\n${format(Date.now(), "yyyy-MM-dd HH:mm:ss")}`) {
   //提供6种通知
   let remarks = '';
   try {
